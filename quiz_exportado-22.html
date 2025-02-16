@@ -1,0 +1,2271 @@
+
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Quiz Exportado</title>
+      <style>
+      body {
+           font-family: 'Poppins', sans-serif;  
+               line-height: 1.3;    
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh; /* Garante altura mínima de 100% */
+            }
+            #quiz-container {
+                width: 100%; /* Ocupa toda largura */
+                min-height: 100vh; /* Altura mínima de 100% da viewport */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .quiz-section {
+                display: none;
+                width: 100%;
+                min-height: 100vh; /* Altura mínima de 100% */
+                padding: 20px 0;
+                box-sizing: border-box;
+            }
+            .quiz-section.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .content {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+        /* Estilos para os botões exportados */
+    .mobile-button {
+  position: relative;
+  width: 100%;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  border: 1px solid;
+  font-size: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+
+/* Efeito de hover para mobile-button */
+.mobile-button:hover {
+  background: linear-gradient(45deg, var(--hover-color), var(--hover-color)) !important;
+}
+        .mobile-button .emoji {
+          margin-left: -10px;
+          font-size: 40px;
+          margin-right: 20px;
+          flex-shrink: 0;
+        }
+        .mobile-button .text {
+          flex: 1;
+          text-align: left; /* Alinhamento padrão */
+        }
+        /* Efeito de hover para mobile-button */
+
+     
+        /* Estilos para links personalizados */
+        .mobile-button a {
+          text-decoration: none;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+      
+        /* Estilos adicionais existentes */
+        button {
+          padding: 8px 16px;
+          border: none;
+          border-radius: 5px;
+          background-color: #89b4fa;
+          color: #1e1e2e;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        button:hover {
+          background-color: #b4befe;
+        }
+        .mobile-progress {
+          width: 100%;
+          margin: 15px 0;
+          position: relative;
+        }
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #313244;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+        .progress-fill {
+          height: 100%;
+          background-color: #89b4fa;
+          transition: width 0.3s ease-out;
+          width: 0;
+        }
+        .progress-value {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: bold;
+          text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+        .mobile-feedback {
+          width: 100%;
+          margin-bottom: 10px;
+          border-radius: 10px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .feedback-container {
+          padding: 15px;
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 30px;
+        }
+        .feedback-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin-right: 15px;
+        }
+        .feedback-content {
+          flex: 1;
+        }
+        .feedback-name {
+          font-weight: bold;
+          margin-bottom: 2px;
+        }
+        .feedback-location {
+          font-size: 0.9em;
+          margin-bottom: 5px;
+        }
+        .feedback-stars {
+          color: #FFD700;
+          margin-bottom: 5px;
+        }
+        .feedback-text {
+          font-style: italic;
+          line-height: 1.4;
+        }
+          /* Estilos texto */
+          
+/* Estilos do Widget de Celular */
+.mobile-phone-widget {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto 10px auto;
+        }
+        .mobile-phone-widget .elements {
+          background-color: #f9fafb;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          position: relative;
+          height: 250px;
+          display: flex;
+          align-items: center;
+          border-radius: 40px 20px 20px 40px;
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto 30px auto;
+          border: 1px solid #e5e7eb;
+
+        }
+        .mobile-phone-widget .phone-frame {
+          position: absolute;
+          left: 0;
+          width: 120px;
+          height: 96%;
+          border: 6px solid black;
+          border-radius: 1.5rem;
+          overflow: hidden;
+          margin-left:-1px;
+        }
+        .mobile-phone-widget .phone-frame img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .mobile-phone-widget .iphone-detalhe {
+          position: absolute;
+          height: 10px;
+          background-color: black;
+          width: 60px;
+          margin: 0 auto;
+          border-radius: 0px 0px 40px 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          top: 0;
+        }
+
+        .mobile-phone-widget .text {
+          margin-left: 140px;
+          padding-right: 10px;
+        }
+        .mobile-phone-widget .text h2 {
+          margin-top: 0;
+        }
+   
+        .mobile-phone-widget[data-position="right"] .elements {
+          border-radius: 20px 40px 40px 20px;
+        }
+        .mobile-phone-widget[data-position="right"] .phone-frame {
+          left: auto;
+          right: 0;
+          margin-right: -1px;
+        }
+        .mobile-phone-widget[data-position="right"] .text {
+          margin-left: 20px;
+          margin-right: 140px;
+          padding-right: 0;
+        }
+        .mobile-phone-widget .phone-content {
+          padding: 0px;
+          box-sizing: border-box;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+        .mobile-text {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto 10px auto;
+        }
+
+        .mobile-image {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.mobile-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 1rem;
+    object-fit: contain;
+}
+   
+          /* Estilos da Nota */
+.mobile-note {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.notes {
+  font-family: "Poppins", sans-serif;
+  border-radius: 0.75rem;
+  position: relative;
+  background-color: #f9fafb;
+  display: flex;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.texts-notes {
+  padding-left: 42px;
+  flex: 1;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 32px;
+  height: 32px;
+  fill: #f59e0b;
+}
+
+.title-notes {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px 0px 0px 10px;
+}
+  /* Estilos para o Multiple Choice exportado */
+.mobile-multiple-choice {
+ width: 100%;
+ margin-bottom: 20px;
+}
+
+.options-grid {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.option-button {
+ position: relative;
+ width: 100%;
+ min-height: 65px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ border-radius: 0.75rem;
+ border: 1px solid rgb(214, 214, 214);
+ background: linear-gradient(45deg, rgb(244, 244, 244), rgb(255, 255, 255));
+ font-size: 20px;
+ margin-bottom: 10px;
+ cursor: pointer;
+ padding: 0;
+ transition: all 0.3s;
+}
+
+.option-content {
+ display: flex;
+ align-items: center;
+ width: 100%;
+ padding: 15px 20px;
+}
+
+.emoji {
+ font-size: 40px;
+ margin-right: 20px;
+ margin-left: -10px;
+ flex-shrink: 0;
+}
+
+.option-text {
+ text-align: left;
+ font-size: 1rem;
+ flex: 1;
+ line-height: 1.3;
+}
+
+.checkbox {
+ width: 24px;
+ height: 24px;
+ border: 2px solid #d6d6d6;
+ border-radius: 4px;
+ background: white;
+ position: relative;
+ flex-shrink: 0;
+}
+
+.option-button.active .checkbox {
+ background: #9333ea;
+ border-color: #9333ea;
+}
+
+.option-button.active .checkbox::after {
+ content: "";
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%) scale(1);
+ width: 16px;
+ height: 16px;
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='white' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: center;
+}
+
+.continue-button {
+ width: 100%;
+ min-height: 65px;
+ border-radius: 0.75rem;
+ border: none;
+ background: #9333ea;
+ color: white;
+ font-size: 20px;
+ margin-top: 20px;
+ cursor: not-allowed;
+ opacity: 0.5;
+ transition: all 0.3s;
+}
+
+.continue-button.active {
+ opacity: 1;
+ cursor: pointer;
+}
+
+.continue-button:hover {
+ opacity: 0.9;
+}
+.continue-button:hover {
+  background: linear-gradient(45deg, var(--hover-color), var(--hover-color)) !important;
+}
+
+h1, h2, h3, p {
+  font-weight: inherit;
+  font-style: inherit;
+  font-weight: normal !important; /* Força peso normal por padrão */
+}
+
+/* Garante que apenas elementos com <b> dentro de cabeçalhos fiquem em negrito */
+h1 b, h2 b, h3 b {
+  font-weight: bold !important;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+.input-widget input.input-field {
+  width: 100%;
+  padding: 24px 60px;
+  border: 1px solid rgb(229, 231, 235);
+  border-radius: 0.75rem;
+  font-size: 17px;
+  background-color: rgb(249, 250, 251);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s;
+  box-sizing: border-box;
+  color: black;
+  margin: 0 !important;
+}
+.input-field::placeholder {
+  font-size: 17px;
+}
+.input-field:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+
+.user-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 40px;
+  pointer-events: none;
+}
+
+
+
+.user-icon svg {
+  height: 40px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.user-icon svg path {
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 0;
+}
+.input-widget input.input-field::placeholder {
+  color: var(--placeholder-color, currentColor);
+  opacity: 0.5;
+  font-size: 17px;
+}
+  /* Estilos do Video Player */
+  /* Atualização dos estilos do vídeo */
+      .mobile-video .container {
+        container-type: inline-size;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .mobile-video .video-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 133.33%;
+        background-color: transparent;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+
+      .video-iframe {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 101%; /* Aumentado levemente para cobrir possíveis gaps */
+        height: 101%; /* Aumentado levemente para cobrir possíveis gaps */
+        transform: translate(-50%, -50%);
+        border: none;
+        background: #000; /* Fundo preto para espaços vazios */
+      }
+
+      .mobile-video .blur-background {
+        position: absolute;
+        top: -1px; /* Ajuste para eliminar gaps */
+        left: -1px; /* Ajuste para eliminar gaps */
+        width: calc(100% + 2px); /* Compensação para os gaps */
+        height: calc(100% + 2px); /* Compensação para os gaps */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 199;
+        display: block;
+      }
+
+      .mobile-video .overlay {
+        color: #fff;
+        position: absolute;
+        padding: 2cqw;
+        width: 50%;
+        height: 40%;
+        background-color: #5d3f92;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2cqw;
+        text-align: center;
+        border-radius: 8px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+    .mobile-video .overlay-title {
+      font-family: Arial, sans-serif;
+      font-size: 5cqw;
+      font-weight: bold;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .mobile-video .overlay-text {
+      font-family: Arial, sans-serif;
+      font-size: 5cqw;
+      margin: 0;
+    }
+
+    .mobile-video .play-icon {
+      position: relative;
+      height: 50%;
+    }
+
+    .mobile-video .top-overlay,
+    .mobile-video .bottom-overlay {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background-color: transparent;
+      z-index: 300;
+      pointer-events: auto;
+    }
+
+    .mobile-video .top-overlay {
+      top: 0;
+      height: 20%;
+    }
+
+    .mobile-video .bottom-overlay {
+      bottom: 0;
+      height: 20%;
+    }
+
+    .mobile-video .hidden {
+      display: none;
+    }
+
+    .mobile-video .play-icon path,
+    .mobile-video .play-icon circle {
+      transition: all 0.3s ease;
+    }
+          /* Estilos da Galeria */
+
+
+.mobile-gallery {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.gallery-container {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.gallery-slide {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.gallery-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 1;
+}
+
+.gallery-dot.active {
+  transform: scale(1.2);
+}
+/* Estilos do FAQ */
+.mobile-faq {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.faq-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  margin-bottom: 10px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.faq-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative; /* Adicionado */
+}
+
+.faq-header:hover {
+  background-color: #f8fafc;
+}
+
+.faq-icon {
+  position: relative; /* Adicionado */
+  margin-right: 15px;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+  overflow: hidden; /* Adicionado */
+}
+
+.faq-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.faq-header.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #000;
+  text-align: left;
+}
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 15px;
+  opacity: 0;
+}
+
+.faq-content.active {
+  max-height: max-content;
+  padding: 15px;
+  opacity: 1;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f8fafc;
+}
+
+.faq-answer {
+  color: #4b5563;
+  line-height: 1.6;
+}
+.faq-icon svg {
+  width: 24px;
+  height: 24px;
+  position: absolute; /* Adicionado */
+  top: 0;
+  left: 0;
+}
+/* Container principal do Score */
+.mobile-score {
+  display: flex;
+  max-width: 600px;
+}
+.mobile-score .score-container {
+  /* Mantém layout fixo até certo ponto, mas permite encolher */
+  width: clamp(300px, 90vw, 600px); 
+  /* ou max-width: 600px e width: 100%, mas clamp() dá mais controle */
+
+  margin: 20px auto;
+  padding: 20px;
+
+  background: #f8f9fe;
+  border-radius: 16px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+
+  display: flex;
+  justify-content: space-around;
+  /* se quiser garantir que NUNCA quebre as colunas, use flex-wrap: nowrap */
+  flex-wrap: nowrap; 
+}
+
+.mobile-score .score-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Se deseja manter 2 colunas sempre, dá pra fixar width. 
+     Mas se quiser levemente flexível, pode usar clamp também */
+  width: 45%; 
+}
+
+.mobile-score .score-title {
+  text-align: center;
+  /* fonte responsiva: encolhe mas não fica minúscula */
+  font-size: clamp(18px, 4vw, 24px); 
+  font-weight: bold;
+  margin-bottom: 20px;
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A parte circular */
+.mobile-score .circle-wrap {
+  /* largura/altura também responsivas */
+  width: clamp(140px, 38vw, 205px);
+  height: clamp(140px, 38vw, 205px);
+
+  position: relative;
+  background: conic-gradient(#a31b1b 0%, #dc2626 85%, rgb(229, 231, 235) 0deg);
+  border-radius: 50%;
+}
+
+.mobile-score .percent {
+  /* fonte responsiva também */
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: bold;
+
+  background: #ffffff;
+  width: clamp(110px, 32vw, 170px);
+  height: clamp(110px, 32vw, 170px);
+
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-score .score-avatar {
+  /* Responsivo para imagem */
+  width: clamp(140px, 38vw, 200px);
+  height: clamp(140px, 38vw, 200px);
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+
+
+
+       .mobile-button,
+        .mobile-text,
+        .mobile-image,
+        .mobile-progress,
+        .mobile-feedback,
+        .mobile-phone-widget,
+        .mobile-note,
+        .mobile-multiple-choice,
+        .input-widget,
+        .mobile-video .container,
+        .mobile-gallery {
+          width: 100%;
+          margin:0 auto;
+          margin-bottom: 40px; /* Padronizando o espaçamento */
+        }
+      </style>
+    </head>
+    <body>
+       <div id="quiz-container">
+            <section id="section-0" class="quiz-section active" style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739645128144" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2><b>Eu duvido você fazer esse teste gratuito e não acertar pelo menos 14 pontos na próxima semana</b></h2></div><div class="mobile-text" id="text-1739645129808" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(96, 96, 96);"><h3>descubra se você está pronto para usar o único gerador de números da Loto Fácil baseado em Inteligência Artificial que aumenta suas chances em até 347%</h3></div><div id="image-1739645130932" class="mobile-image" style="position: relative; max-width: 384px; width: 100%; margin-inline: auto;"><img src="https://i.ibb.co/pxTY422/a0bceb69-abbb-4be4-a5b0-7c5663516d77.jpg" alt="Imagem" style="width: 100%; height: auto;"></div><button class="mobile-button" id="button-1739645132131" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#9333a6" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Começar</span></button>
+                </div>
+            </section>
+            <section id="section-1" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div id="image-1739645431929-kavinuar2" class="mobile-image" style="position: relative; max-width: 383px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/jogadores-aumentam-em-200-os-acertos-depois-de-usar-um-sistema-gerador-de-jogos-com-inteligencia-artificial-e-segundo-2.jpg" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1739645620782" style="font-weight: normal; font-style: normal; text-align: start; color: rgb(0, 0, 0); position: relative;"><p>✅ Método comprovado<br>
+
+👍🏻 Sistema simples e fácil de usar<br>
+
+🤑 Mais de 1.000 ganhadores
+
+</p></div><button class="mobile-button" id="button-1739645431929-h58e30ui1" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#9333a6" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-2" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739645646735-1ylapxzhn" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124); position: relative;"><h2><b>Qual sua idade?</b></h2></div><div class="mobile-text" id="text-1739645846410" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>clique em um botão abaixo</b></p></div><button class="mobile-button" id="button-1739645646735-9w8a7nfzb" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">👶</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">18-30 anos</span></button><button class="mobile-button" id="button-1739645798855" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">👤</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">31-45 anos</span></button><button class="mobile-button" id="button-1739645799226" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">👨</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">46-60 anos</span></button><button class="mobile-button" id="button-1739645799543" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">👴</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Acima de 60 anos</span></button>
+                </div>
+            </section>
+            <section id="section-3" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739665414559" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2><b>Qual sua experiência com a Loto Fácil?</b></h2></div><div class="mobile-text" id="text-1739665679998" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p>Escolha uma opção </p></div><button class="mobile-button" id="button-1739665500591" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🌱</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Iniciante</span></button><button class="mobile-button" id="button-1739665731305" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">⭐</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Apostador Regular</span></button><button class="mobile-button" id="button-1739665731606" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🏆</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Apostador Avançado</span></button>
+                </div>
+            </section>
+            <section id="section-4" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739665885172-tqdpiazzo" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2><b>Você está prestes a descobrir porque 97% dos apostadores NUNCA ganham prêmios significativos na Loto Fácil...</b></h2></div><div id="image-1739665949143" class="mobile-image" style="position: relative; max-width: 385px; width: 100%; margin-inline: auto;"><img src="https://i.ibb.co/Qfy8TNF/hqdefault.jpg" alt="Imagem" style="width: 100%; height: auto;"></div><button class="mobile-button" id="button-1739665885172-tev24ne0s" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">continuar</span></button>
+                </div>
+            </section>
+            <section id="section-5" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739665972026-sckhi7s0h" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2><b>Com que frequência você aposta na Loto Fácil?</b></h2></div><div class="mobile-text" id="text-1739665972026-8zlbhg1vc" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>isso é importante para nós identificarmos seus erros</b></p></div><button class="mobile-button" id="button-1739665972026-0xnvhhydu" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📅</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Todos os sorteios</span></button><button class="mobile-button" id="button-1739665972026-d063qoj12" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🎯</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">1-2 vezes por semana</span></button><button class="mobile-button" id="button-1739665972026-6qbfxojo1" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🌟</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Ocasionalmente</span></button><button class="mobile-button" id="button-1739666057758" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">❌</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Nunca apostei</span></button>
+                </div>
+            </section>
+            <section id="section-6" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739666114830-hesq4h3qi" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2><b>Como você escolhe seus números?</b></h2></div><div class="mobile-text" id="text-1739666114830-7ih3fj6uh" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>Escolha uma opção</b></p></div><button class="mobile-button" id="button-1739666114830-y8bs03p49" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🎲</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Aleatoriamente</span></button><button class="mobile-button" id="button-1739666114830-omgm6q53w" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📅</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Datas especiais</span></button><button class="mobile-button" id="button-1739666114830-3x5wzbsfc" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🍀</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Números da sorte</span></button><button class="mobile-button" id="button-1739666114830-9b79xln7y" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Análise de resultados anteriores</span></button>
+                </div>
+            </section>
+            <section id="section-7" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739666913958" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Quanto você investe por aposta em média?</b></h2></div><div class="mobile-text" id="text-1739666916976" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>Seja sincero na sua escolha</b></p></div><button class="mobile-button" id="button-1739666977307" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💵</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">R$3(aposta simples)</span></button><button class="mobile-button" id="button-1739667026578" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💶</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Entre R$3 e R$50</span></button><button class="mobile-button" id="button-1739667027207" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💷</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Entre R$50 e R$200</span></button><button class="mobile-button" id="button-1739667027613" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💸</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Mais de R$200</span></button>
+                </div>
+            </section>
+            <section id="section-8" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739667216347-wldovb88c" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(68, 68, 68);"><p><i>analizando suas respostas</i></p></div><div id="progress-1739667291019" class="mobile-progress" data-start="0" data-end="100" data-enable-redirect="true" data-duration="4" style="position: relative;" data-redirect-link="">
+         <div class="progress-bar" style="background-color: rgb(49, 50, 68);">
+             <div class="progress-fill" style="width: 0%; background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243));"></div>
+         </div>
+         <div class="progress-value" style="display: block;">0%</div>
+    </div>
+                </div>
+            </section>
+            <section id="section-9" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739667327913-a2x0jokfe" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h1><b>ATENÇÃO</b></h1></div><div class="mobile-text" id="text-1739667327913-d82nvmjax" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68); position: relative;"><h3><b>Acabei de identificar um padrão interessante nas suas respostas</b>
+
+</h3></div><div class="mobile-text" id="text-1739667407221" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68); position: relative;"><p>clique para continuarmos</p></div><button class="mobile-button" id="button-1739667327913-6wuruot1x" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-10" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739667499855-thx5j5r0t" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Qual sua maior frustração ao jogar na Loto Fácil?</b></h2></div><div class="mobile-text" id="text-1739667499855-yfvzek6pg" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>Responda com sinceridade</b></p></div><button class="mobile-button" id="button-1739667499855-7l5cc8uoh" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">😢</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Passo perto mas não ganho</span></button><button class="mobile-button" id="button-1739667499855-mspkm31x4" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💸</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Gasto muito dinheiro sem retorno</span></button><button class="mobile-button" id="button-1739667499855-s76iyjj72" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🎲</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Não sei escolher os números certos</span></button><button class="mobile-button" id="button-1739667499855-f131eeqp1" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Não consigo manter uma estratégia</span></button>
+                </div>
+            </section>
+            <section id="section-11" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739667774339-t044iddvb" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Quando foi a última vez que você acertou 14 pontos?</b></h2></div><div class="mobile-text" id="text-1739667774339-5rvobvsnk" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>fale a verdade</b></p></div><button class="mobile-button" id="button-1739667774339-9tv5x1vvz" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">❌</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Nunca ganhei</span></button><button class="mobile-button" id="button-1739667774339-3ryqlvdnd" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">⭐</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Nos últimos 30 dias</span></button><button class="mobile-button" id="button-1739667774339-e7uuajp3i" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🌟</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Nos últimos 6 meses</span></button><button class="mobile-button" id="button-1739667774339-qjelk719d" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📅</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Há mais de 6 meses</span></button>
+                </div>
+            </section>
+            <section id="section-12" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739668149072-01xroh6zn" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>O que você sente quando vê alguém ganhando na Loto Fácil?</b></h2></div><div class="mobile-text" id="text-1739668149072-o8sctqfki" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>seja sincero</b></p></div><button class="mobile-button" id="button-1739668149072-f17rsdhqv" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">😤</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Frustração por não ser eu</span></button><button class="mobile-button" id="button-1739668149072-uhby8j3om" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🙏</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Esperança que um dia será minha vez</span></button><button class="mobile-button" id="button-1739668149072-sop46efkk" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🤨</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Desconfiança se é realmente possível</span></button><button class="mobile-button" id="button-1739668149072-owd5qy1v1" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💪</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Motivação para tentar mais</span></button>
+                </div>
+            </section>
+            <section id="section-13" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739668300543-jjqb3uh4f" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159); position: relative;"><h2><b>Você conhece a matemática por trás da Loto Fácil?</b></h2></div><div class="mobile-text" id="text-1739668300543-lk1csgfy0" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739668755865" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>escolha uma resposta</b></p></div><button class="mobile-button" id="button-1739668300543-y7ezfyyu6" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">❌</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Não tenho ideia</span></button><button class="mobile-button" id="button-1739668300543-0orhaz8pf" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Sei o básico de probabilidade</span></button><button class="mobile-button" id="button-1739668300543-q9u0166hz" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📈</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Entendo bem como funciona</span></button><button class="mobile-button" id="button-1739668300543-69dywrfxl" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📚</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Quero aprender mais</span></button>
+                </div>
+            </section>
+            <section id="section-14" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739668637695-aej7sqtv3" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159); position: relative;"><h2><b>Você acredita que Inteligência Artificial pode ajudar nas apostas?</b></h2></div><div class="mobile-text" id="text-1739668637695-ovue8borr" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739668799452" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><p><b>seja sincero</b></p></div><button class="mobile-button" id="button-1739668637695-yllsmtx8g" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">✅</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Sim, totalmente</span></button><button class="mobile-button" id="button-1739668637695-bm29yjuda" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🤔</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Talvez, preciso entender melhor</span></button><button class="mobile-button" id="button-1739668637695-vpczt352n" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">❌</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Não acredito nisso</span></button><button class="mobile-button" id="button-1739668637695-z7qxd3y1h" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💭</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Nunca pensei sobre isso</span></button>
+                </div>
+            </section>
+            <section id="section-15" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739669108898-ijquuhknz" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Existe um sistema que está fazendo as pessoas acertarem 14 pontos toda semana</b></h2></div><div class="mobile-text" id="text-1739669108898-hfos72whu" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739669108898-pkeynvjpt" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><p><b>veja o resultado de uma usuária do nosso sistema<br></b>👇👇👇</p></div><div id="image-1739669369093" class="mobile-image" style="position: relative; max-width: 393px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/img_0136-2.png" alt="Imagem" style="width: 100%; height: auto;"></div><button class="mobile-button" id="button-1739669108898-pqjiq2db9" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-16" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739669532323-vzuanbcmp" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>O que você faria com um prêmio da Loto Fácil?</b></h2></div><div class="mobile-text" id="text-1739669532323-q50w37nkr" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739669532323-nhfwq1rg0" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><p><b>qual seu sonho?</b></p></div><button class="mobile-button" id="button-1739669532323-j9713s3l3" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🛒</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">iria no mercado sem contar as moedas</span></button><button class="mobile-button" id="button-1739669532323-y0jq6vt15" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💳</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Quitar dívidas</span></button><button class="mobile-button" id="button-1739669532323-5celamo5j" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🏠</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Comprar uma casa</span></button><button class="mobile-button" id="button-1739669532323-wrkvsujoo" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">👨‍👩‍👧‍👦</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Ajudar a família</span></button>
+                </div>
+            </section>
+            <section id="section-17" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739670098088-4oaje19q6" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Quanto você gostaria de ganhar mensalmente?</b></h2></div><div class="mobile-text" id="text-1739670098088-cu9bfditj" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739670098088-eynw1n8eq" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><p><b>escolha uma opção</b></p></div><button class="mobile-button" id="button-1739670098088-v1okwnexf" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💵</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">R$1.000 a R$5.000</span></button><button class="mobile-button" id="button-1739670098088-i561g1zi2" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💶</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">R$5.000 a R$10.000</span></button><button class="mobile-button" id="button-1739670098088-fk98is58l" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💷</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">R$10.000 a R$50.000</span></button><button class="mobile-button" id="button-1739670098088-lbg4qlyh5" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💸</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Mais de R$50.000</span></button>
+                </div>
+            </section>
+            <section id="section-18" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739670243450-0sxsfiwm2" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Estamos quase terminando, faltam só mais algumas perguntas</b></h2></div><div class="mobile-text" id="text-1739670243450-00jwojne3" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><button class="mobile-button" id="button-1739670243450-wybaa6gt4" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-19" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739670344701-pr11ay6w0" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159);"><h2><b>Se eu te mostrasse um método voce estarias disposto a:</b></h2></div><div class="mobile-text" id="text-1739670344701-gii4gd50d" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739670344701-o8ttmim18" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><p><b>seja sincero</b></p></div><button class="mobile-button" id="button-1739670344701-xx5dpczy4" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">✅</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Seguir o método à risca</span></button><button class="mobile-button" id="button-1739670344701-zv600a6gz" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">⭐</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Testar por 30 dias</span></button><button class="mobile-button" id="button-1739670344701-i9u2eiuh3" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">💰</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">testaria atá ganhar</span></button>
+                </div>
+            </section>
+            <section id="section-20" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739670760588-f2uhwheg4" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(123, 33, 159); position: relative;"><h2><b>Quando você gostaria de começar a ganhar?</b></h2></div><div class="mobile-text" id="text-1739670760588-697ybqctv" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p></p></div><div class="mobile-text" id="text-1739670760588-qnn7ecqb4" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><p></p></div><div class="mobile-text" id="text-1739670959328" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(68, 68, 68);"><p><b>escolha uma data</b></p></div><button class="mobile-button" id="button-1739670760588-ged5gthvn" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">🚀</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Imediatamente</span></button><button class="mobile-button" id="button-1739670760588-q0jhgnhqj" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📅</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Nos próximos dias</span></button><button class="mobile-button" id="button-1739670760588-1mmviu716" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">📆</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">No próximo mês</span></button><button class="mobile-button" id="button-1739670943218" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">⏳</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Não tenho pressa</span></button>
+                </div>
+            </section>
+            <section id="section-21" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739671090351" style="font-weight: normal; font-style: normal; text-align: start; color: rgb(0, 0, 0); position: relative;"><p><i>analizando suas respostas</i></p></div><div id="progress-1739671128032" class="mobile-progress" data-start="0" data-end="100" style="position: relative;" data-enable-redirect="true" data-duration="5" data-redirect-link="">
+         <div class="progress-bar" style="background-color: rgb(49, 50, 68);">
+             <div class="progress-fill" style="width: 0%; background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243));"></div>
+         </div>
+         <div class="progress-value" style="display: block;">0%</div>
+    </div><div class="mobile-text" id="text-1739671134211" style="font-weight: normal; font-style: normal; text-align: start; color: rgb(0, 0, 0);"><p>✅ Verificando seu perfil...<br>
+📊 Calculando probabilidades...<br>
+🎯 Analisando padrões de jogo...<br>
+📈 Preparando recomendações...<br>
+📋 Gerando relatório personalizado...</p></div>
+                </div>
+            </section>
+            <section id="section-22" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739671223698-0kghvrrsk" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124); position: relative;"><h1><b>🎉 PARABÉNS</b></h1></div><div class="mobile-text" id="text-1739671278965" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(97, 23, 124); position: relative;"><h2>Você tem um perfil ótimo para usar nosso Gerador Inteligente!</h2></div><div id="score-1739671333841" class="mobile-score" style="position: relative;" data-primary-color="#61177c" data-secondary-color="#be38f3" data-bg-color="#f8f9fe">
+         <div class="score-container" style="background-color: rgb(248, 249, 254); border-color: rgb(229, 231, 235);">
+      <div class="score-section">
+        <div class="score-title" style="color: rgb(0, 0, 0);">ance de acertar 14 pontos </div>
+        <div class="circle-wrap" style="background: conic-gradient(rgb(97, 23, 124) 0%, rgb(190, 56, 243) 89%, rgb(229, 231, 235) 0deg);">
+          <div class="percent" style="background-color: rgb(248, 249, 254); color: rgb(0, 0, 0);">89%</div>
+        </div>
+      </div>
+      <div class="score-section">
+        <div class="score-title" style="color: rgb(0, 0, 0);">Resultado: ótimo 👑</div>
+        <img src="https://i.ibb.co/SJk60N8/Design-sem-nome-2.jpg" alt="Avatar" class="score-avatar">
+      </div>
+    </div>
+  </div><div class="mobile-text" id="text-1739671467456" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2>📊 Nossa análise revelou que:</h2></div><div class="mobile-text" id="text-1739671223698-blxp5qfpx" style="font-weight: normal; font-style: normal; text-align: start; color: rgb(0, 0, 0); position: relative;"><p></p><div style="background-color:#e5e5e5;border-radius:1rem;padding:15px"> <b>❌ Você está perdendo 89% das suas chances de ganhar;<br><br> 📈 Seu perfil tem 347% mais chances usando nosso método;<br><br> 🎯 Você pode começar a ganhar já no próximo sorteio!</b> </div><p></p></div><button class="mobile-button" id="button-1739671502865" style="background: linear-gradient(45deg, rgb(123, 33, 159), rgb(190, 56, 243)); border-color: rgb(123, 33, 159); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0"><span class="emoji">▶️</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">VER DEMONSTRAÇÃO DO SISTEMA</span></button>
+                </div>
+            </section>
+            <section id="section-23" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1739671767972-e6k9xt28e" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(97, 23, 124);"><h2><b>REVELADO: O Único Sistema com Inteligência Artificial que Aumentou em 347% as Chances de Ganhar na Loto Fácil
+</b></h2></div><div class="mobile-text" id="text-1739671767972-r4nqh5401" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(68, 68, 68); position: relative;"><h3>
+Descubra como 27.849 pessoas estão ganhando prêmios toda semana usando esta tecnologia revolucionária que identifica padrões matemáticos invisíveis nos sorteios</h3></div><div id="video-1739671852434" class="mobile-video" style="position: relative;">
+      <div class="container">
+        <div class="video-container" style="padding-bottom: 124.8%;">
+          <iframe id="youtube-video-1739671852434" class="video-iframe" src="https://www.youtube-nocookie.com/embed/eaMy9Ch_LU8?controls=0&enablejsapi=1&modestbranding=1&showinfo=0title=0&fs=0&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="loto"></iframe>
+          <div id="blur-bg-1739671852434" class="blur-background" style="display: block;"></div>
+          <div id="start-overlay-1739671852434" class="overlay" style="display: flex; background-color: rgb(97, 23, 124); color: rgb(255, 255, 255);">
+            <h1 class="overlay-title">vídeo pronto</h1>
+         <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);">
+            <circle cx="12" cy="12" r="10" stroke="#FF0000" stroke-width="1" fill="none" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></circle>
+            <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#FF0000" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></path>
+        </svg>
+
+            <p class="overlay-text">Clique para assistir</p>
+          </div>
+          <div id="pause-overlay-1739671852434" class="overlay hidden" style="background-color: rgb(97, 23, 124); color: rgb(255, 255, 255);">
+            <h1 class="overlay-title">Vídeo pausado</h1>
+            <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 255, 255);">
+              <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1" fill="none" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></circle>
+              <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="white" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></path>
+            </svg>
+            <p class="overlay-text">Continuar assistindo</p>
+          </div>
+          <div class="top-overlay"></div>
+          <div class="bottom-overlay"></div>
+        </div>
+      </div></div><button class="mobile-button" id="button-1739671767972-ch51s0xjn" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(97, 23, 124); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0" data-link="https://lastlink.com/p/C234C38A9/checkout-payment"><span class="emoji">👉</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">QUERO AUMENTAR MINHAS CHANCES AGORA!</span></button><div class="mobile-text" id="text-1739671767972-xfzved2o8" style="font-weight: normal; font-style: normal; text-align: start; color: rgb(0, 0, 0); position: relative;"><p></p><div style="background-color:#d2f7c7;border-radius:20px;padding:10px"> ✅ Aumente suas chances em 200%<br> ✅ Gere dezenas otimizadas em segundos<br> ✅ Zero conhecimento matemático necessário<br> ✅ Interface super simples e intuitiva<br> ✅ Acesso em qualquer dispositivo<br> ✅ Atualizações automáticas após cada sorteio </div><p></p></div><div class="mobile-text" id="text-1739671767972-5roxci031" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(97, 23, 124); position: relative;"><h2>Começando a usar o sistema hoje
+esses poderão ser seus resultados...</h2></div><div id="score-1739707787652" class="mobile-score" style="position: relative;" data-primary-color="#61177c" data-secondary-color="#be38f3" data-bg-color="#f8f9fe">
+         <div class="score-container" style="background-color: rgb(248, 249, 254); border-color: rgb(229, 231, 235);">
+      <div class="score-section">
+        <div class="score-title" style="color: rgb(35, 35, 35);">chance de acertar 14 pontos na 1 semana</div>
+        <div class="circle-wrap" style="background: conic-gradient(rgb(97, 23, 124) 0%, rgb(190, 56, 243) 97%, rgb(229, 231, 235) 0deg);">
+          <div class="percent" style="background-color: rgb(248, 249, 254); color: rgb(35, 35, 35);">97%</div>
+        </div>
+      </div>
+      <div class="score-section">
+        <div class="score-title" style="color: rgb(35, 35, 35);">Chance Muito Alta</div>
+        <img src="https://decifrasonhos.com/wp-content/uploads/2025/02/lotofacil.jpg" alt="Avatar" class="score-avatar">
+      </div>
+    </div>
+  </div><div class="mobile-text" id="text-1739707979270" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(35, 35, 35); position: relative;"><h3><b>98% DOS USUÁRIOS DO SISTEMA  </b>acertam 14 pontos jána primeira semana e a maioria deles acertam<b> 15 pontos  no primeiro mês</b><br><br>
+
+<b>Usuários fazendo mais de 5 mil por mês na lotofácil  usando o nosso sistema</b>
+</h3></div><div id="image-1739708164446" class="mobile-image" style="position: relative; max-width: 393px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/img_0136-4.png" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1739708200763" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(35, 35, 35); position: relative;"><h3><b>Não deixe essa chance de transformar sua vida escapar </b>🔥
+<br>💰Comesse hoje mesmo e sinta seu bolso ficando mais cheio</h3></div><button class="mobile-button" id="button-1739708311682" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(97, 23, 124); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0" data-link="https://lastlink.com/p/C234C38A9/checkout-payment"><span class="emoji">👉</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">QUERO AUMENTAR MINHAS CHANCES AGORA!</span></button><div class="mobile-text" id="text-1739708359092" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(35, 35, 35); position: relative;"><h3><b>Veja a comparação dessas duas pessoas...</b></h3></div><div class="mobile-text" id="text-1739708321715" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p><b>1. Você...</b><br>
+❌ Passa aperto final do mês <br>
+❌ Não recebe o dinheiro o que quer<br>
+❌ Não consegue comprar o que deseja<br>
+❌ Não ganha bons prémios na lotofácil<br>
+❌ Perde mais do que ganha
+<br><br>
+<b>2. Juliano usuario do sistema...</b><br>
+✅ Faz mais de<b> R$10.000 todo mês</b><br>
+✅ Ganha muito dinheiro apenas jogando na loto<br>
+✅ É seu proprio chefe<br>
+✅ Compra tudo que deseja<br>
+✅ Descobriu o melhor método para lucrar na lotofácil </p></div><div class="mobile-text" id="text-1739708647462" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(35, 35, 35); position: relative;"><h2><b>isso é o que Nossa <span style="color:#7b219f">tecnologia exclusiva </span>faz:</b></h2></div><div id="image-1739708405336" class="mobile-image" style="position: relative; max-width: 384px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/Design-sem-nome-2.jpg" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1739708641358" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><h3><div style="background-color:#f1f9f9;border-radius:20px;padding:10px"> 1️⃣ Analisa milhares de sorteios anteriores<br> 2️⃣ Identifica padrões matemáticos ocultos<br> 3️⃣ Aplica 7 algoritmos diferentes de IA<br> 4️⃣ Gera combinações otimizadas em segundos<br> </div></h3></div><div class="mobile-text" id="text-1739708503993" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(35, 35, 35); position: relative;"><h3><b><span style="color:#61177c">Qualquer pessoa </span>consegue ganhar muito dinheiro na lotofácil usando nosso sistema</b></h3></div><div id="image-1739708568920" class="mobile-image" style="position: relative; max-width: 383px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/img_0136-3.png" alt="Imagem" style="width: 100%; height: auto;"></div><div id="image-1739708575178" class="mobile-image" style="position: relative; max-width: 383px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/img_0136-6.jpg" alt="Imagem" style="width: 100%; height: auto;"></div><div id="image-1739708588073" class="mobile-image" style="position: relative; max-width: 383px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/img_0136-5.png" alt="Imagem" style="width: 100%; height: auto;"></div><button class="mobile-button" id="button-1739708860704" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(97, 23, 124); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0" data-link="https://lastlink.com/p/C234C38A9/checkout-payment"><span class="emoji">👉</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Também quero acertar 14 pontos!</span></button><div class="mobile-text" id="text-1739708887114" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(227, 36, 0); position: relative;"><h2><b>Sem o Gerador Inteligente:</b></h2></div><div class="mobile-text" id="text-1739708909820" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(227, 36, 0); position: relative;"><h3><div style="background-color:#ffdad8;border-radius:20px;padding:10px"> ❌ Escolha aleatória de números<br> ❌ Baixíssimas chances de ganhar<br> ❌ Desperdício de dinheiro<br> ❌ Frustração constante<br> ❌ Zero estratégia </div></h3></div><div class="mobile-text" id="text-1739708922196" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(102, 156, 53); position: relative;"><h2><b>Com o Gerador Inteligente:</b></h2></div><div class="mobile-text" id="text-1739708966396" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(56, 87, 26);"><h3><div style="background-color:#d2f7c7;border-radius:20px;padding:10px"> ✅ Números baseados em IA<br> ✅ 200% mais chances de ganhar<br> ✅ Investimento otimizado<br> ✅ Resultados consistentes<br> ✅ Estratégia comprovada </div></h3></div><div class="mobile-text" id="text-1739708999711" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0); position: relative;"><h3><b>Daqui um mês você <span style="color:#e32400">vai se arrepender</span> de não ter começado hoje</b><br><br>Comesse a acertar os tão sonhados 14 pontos toda semana e nunca mais se preocupe com dinheiro<br><br>Com sistema<b> 100% eficaz</b> e pronto para te dar jogos otimizados com<b> auto potencial de ganhos</b> e pare de depender da sorte para ganhar na lotofácil</h3></div><div id="image-1739709084200" class="mobile-image" style="position: relative; max-width: 383px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/Design-sem-nome-3.png" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1739709080483" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><h3><div style="background-color:#e8e8e8;border-radius:10px;padding:10px"><b> oferta especial por tempo limitado</b><br><br>de <span style="color:red"><b>R$ <s>397,00</s></b></span> <br>por apenas<br> <span style="color:green; font-size:30px"><b>R$ 47,00</b></span> </div><br></h3></div><button class="mobile-button" id="button-1739709300260" style="background: linear-gradient(45deg, rgb(97, 23, 124), rgb(190, 56, 243)); border-color: rgb(97, 23, 124); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#be38f3" data-delay="0" data-link="https://lastlink.com/p/C234C38A9/checkout-payment"><span class="emoji">👉</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Quero acertar 14 pontos toda semana!</span></button><div class="mobile-text" id="text-1739709334533" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0); position: relative;"><p>✅ 27.849 ganhadores nos últimos 30 dias<br>
+✅ 200% mais chances comprovadas<br>
+✅ Método certificado e validado<br>
+✅ Tecnologia exclusiva de IA<br></p></div><div id="image-1739709372237" class="mobile-image" style="position: relative; max-width: 200px; width: 100%; margin-inline: auto;"><img src="https://decifrasonhos.com/wp-content/uploads/2025/02/garantia2.png.webp" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1739709424484" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><h2>DUPLA GARANTIA DE RESULTADO</h2></div><div class="mobile-text" id="text-1739709385301" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(0, 0, 0); position: relative;"><h3><b>1- Garantia de Satisfação: </b>14 dias para testar. Se não ficar 100% satisfeito, <b>devolvemos seu dinheiro.</b>
+<br>
+<b>2-Garantia de Resultado: </b>Se não ganhar nenhum prêmio nos primeiros 30 dias, devolvemos todo seu investimento!</h3></div><div class="mobile-text" id="text-1739709438791" style="font-weight: normal; font-style: normal; text-align: center; color: rgb(0, 0, 0);"><h2><b>❓ PERGUNTAS FREQUENTES</b></h2></div><div id="faq-1739709504480" class="mobile-faq" style="position: relative;">
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">Como funciona o Gerador Inteligente?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Nossa tecnologia de Inteligência Artificial analisa todos os sorteios anteriores da Loto Fácil, identificando padrões matemáticos ocultos para gerar combinações otimizadas que aumentam suas chances de ganhar em até 200%.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">Como recebo acesso ao sistema?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Após a confirmação do pagamento, você receberá imediatamente um e-mail com suas credenciais de acesso. Em menos de 5 minutos você já pode começar a usar o gerador.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">O sistema funciona em celular?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Sim! O Gerador Inteligente funciona perfeitamente em qualquer dispositivo: celular, tablet ou computador. Você pode acessar de onde estiver.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">Quantas combinações posso gerar?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Você tem acesso ilimitado! Pode gerar quantas combinações quiser, 24 horas por dia, 7 dias por semana.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">As combinações são realmente eficientes?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Sim! Nosso sistema já ajudou mais de 27.849 pessoas a ganharem prêmios. Só nos últimos 30 dias, mais de 15.000 usuários acertaram 14 ou mais pontos usando nossas combinações.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">Por que o preço está tão baixo?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Esta é uma oferta promocional por tempo limitado. O valor normal é R$297, mas como parte de nossa estratégia de expansão, estamos oferecendo um desconto especial para as próximas 50 pessoas.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">E se eu não gostar do sistema?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Você tem nossa garantia incondicional de 30 dias. Se não ficar satisfeito por qualquer motivo, devolvemos 100% do seu dinheiro.</p>
+        </div>
+      </div>
+    
+      <div class="faq-item" style="border-color: #e5e7eb">
+        <button class="faq-header" style="background-color: #ffffff">
+          <div class="faq-icon" style="background-color: #ffffff">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="#1e1e2e" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="#1e1e2e" stroke-width="2"></line>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#1e1e2e" stroke-width="2"></line>
+            </svg>
+          </div>
+          <div class="faq-title" style="color: #000000">O pagamento é seguro?</div>
+        </button>
+        <div class="faq-content" style="background-color: #f8fafc; border-color: #e5e7eb">
+          <p class="faq-answer" style="color: #4b5563">Absolutamente! Utilizamos a mesma tecnologia de segurança dos grandes bancos. Seus dados estão 100% protegidos.</p>
+        </div>
+      </div>
+    </div>
+                </div>
+            </section>
+ </div>
+<script>
+  // Dados de conexões fornecidos no formato JSON
+  const connectionsData = [{"startIndex":2,"endIndex":3,"elementId":"button-1739645798855"},{"startIndex":2,"endIndex":3,"elementId":"button-1739645646735-9w8a7nfzb"},{"startIndex":2,"endIndex":3,"elementId":"button-1739645799226"},{"startIndex":2,"endIndex":3,"elementId":"button-1739645799543"},{"startIndex":3,"endIndex":4,"elementId":"button-1739665500591"},{"startIndex":3,"endIndex":4,"elementId":"button-1739665731305"},{"startIndex":3,"endIndex":4,"elementId":"button-1739665731606"},{"startIndex":4,"endIndex":5,"elementId":"button-1739665885172-tev24ne0s"},{"startIndex":5,"endIndex":6,"elementId":"button-1739665972026-0xnvhhydu"},{"startIndex":5,"endIndex":6,"elementId":"button-1739665972026-d063qoj12"},{"startIndex":5,"endIndex":6,"elementId":"button-1739665972026-6qbfxojo1"},{"startIndex":5,"endIndex":6,"elementId":"button-1739666057758"},{"startIndex":0,"endIndex":2,"elementId":"button-1739645132131"},{"startIndex":6,"endIndex":7,"elementId":"button-1739666114830-y8bs03p49"},{"startIndex":6,"endIndex":7,"elementId":"button-1739666114830-omgm6q53w"},{"startIndex":6,"endIndex":7,"elementId":"button-1739666114830-3x5wzbsfc"},{"startIndex":6,"endIndex":7,"elementId":"button-1739666114830-9b79xln7y"},{"startIndex":8,"endIndex":9,"elementId":"progress-1739667291019"},{"startIndex":9,"endIndex":10,"elementId":"button-1739667327913-6wuruot1x"},{"startIndex":10,"endIndex":11,"elementId":"button-1739667499855-7l5cc8uoh"},{"startIndex":10,"endIndex":11,"elementId":"button-1739667499855-mspkm31x4"},{"startIndex":10,"endIndex":11,"elementId":"button-1739667499855-s76iyjj72"},{"startIndex":10,"endIndex":11,"elementId":"button-1739667499855-f131eeqp1"},{"startIndex":12,"endIndex":13,"elementId":"button-1739668149072-f17rsdhqv"},{"startIndex":12,"endIndex":13,"elementId":"button-1739668149072-uhby8j3om"},{"startIndex":12,"endIndex":13,"elementId":"button-1739668149072-sop46efkk"},{"startIndex":12,"endIndex":13,"elementId":"button-1739668149072-owd5qy1v1"},{"startIndex":13,"endIndex":14,"elementId":"button-1739668300543-y7ezfyyu6"},{"startIndex":13,"endIndex":14,"elementId":"button-1739668300543-0orhaz8pf"},{"startIndex":13,"endIndex":14,"elementId":"button-1739668300543-q9u0166hz"},{"startIndex":13,"endIndex":14,"elementId":"button-1739668300543-69dywrfxl"},{"startIndex":14,"endIndex":1,"elementId":"button-1739668637695-yllsmtx8g"},{"startIndex":14,"endIndex":1,"elementId":"button-1739668637695-bm29yjuda"},{"startIndex":14,"endIndex":1,"elementId":"button-1739668637695-vpczt352n"},{"startIndex":14,"endIndex":1,"elementId":"button-1739668637695-z7qxd3y1h"},{"startIndex":1,"endIndex":16,"elementId":"button-1739645431929-h58e30ui1"},{"startIndex":16,"endIndex":15,"elementId":"button-1739669532323-j9713s3l3"},{"startIndex":16,"endIndex":15,"elementId":"button-1739669532323-y0jq6vt15"},{"startIndex":16,"endIndex":15,"elementId":"button-1739669532323-5celamo5j"},{"startIndex":16,"endIndex":15,"elementId":"button-1739669532323-wrkvsujoo"},{"startIndex":15,"endIndex":17,"elementId":"button-1739669108898-pqjiq2db9"},{"startIndex":17,"endIndex":18,"elementId":"button-1739670098088-v1okwnexf"},{"startIndex":18,"endIndex":19,"elementId":"button-1739670243450-wybaa6gt4"},{"startIndex":17,"endIndex":18,"elementId":"button-1739670098088-i561g1zi2"},{"startIndex":17,"endIndex":18,"elementId":"button-1739670098088-fk98is58l"},{"startIndex":17,"endIndex":18,"elementId":"button-1739670098088-lbg4qlyh5"},{"startIndex":19,"endIndex":20,"elementId":"button-1739670344701-xx5dpczy4"},{"startIndex":19,"endIndex":20,"elementId":"button-1739670344701-zv600a6gz"},{"startIndex":19,"endIndex":20,"elementId":"button-1739670344701-i9u2eiuh3"},{"startIndex":20,"endIndex":21,"elementId":"button-1739670760588-ged5gthvn"},{"startIndex":20,"endIndex":21,"elementId":"button-1739670760588-q0jhgnhqj"},{"startIndex":20,"endIndex":21,"elementId":"button-1739670760588-1mmviu716"},{"startIndex":20,"endIndex":21,"elementId":"button-1739670943218"},{"startIndex":21,"endIndex":22,"elementId":"progress-1739671128032"},{"startIndex":22,"endIndex":23,"elementId":"button-1739671502865"},{"startIndex":7,"endIndex":8,"elementId":"button-1739666977307"},{"startIndex":7,"endIndex":8,"elementId":"button-1739667026578"},{"startIndex":7,"endIndex":8,"elementId":"button-1739667027207"},{"startIndex":7,"endIndex":8,"elementId":"button-1739667027613"},{"startIndex":11,"endIndex":12,"elementId":"button-1739667774339-qjelk719d"},{"startIndex":11,"endIndex":12,"elementId":"button-1739667774339-3ryqlvdnd"},{"startIndex":11,"endIndex":12,"elementId":"button-1739667774339-e7uuajp3i"},{"startIndex":11,"endIndex":12,"elementId":"button-1739667774339-9tv5x1vvz"}];
+
+      /*************************************************************
+       * 1) CONFIGURAÇÃO DO WEBHOOK E INFORMAÇÕES DO QUIZ
+       *************************************************************/
+      const ANALYTICS_CONFIG = {
+        webhookUrl:
+          "https://script.google.com/macros/s/AKfycbzl-OEF6f7yhlSJaLrJYLaa58vXPVLNPe_i3omnAMLzPjLWrYUDJISccDIcR6mplsOVIg/exec", // Substitua pela URL do seu Google Apps Script
+        quizId: "quiz_" + Date.now(), // ID único do quiz baseado no timestamp atual
+        quizName: "Terrace", // Nome do quiz
+        quizCategory: "Teste", // Categoria do quiz
+      };
+
+      /*************************************************************
+       * 2) OBJETO PRINCIPAL DE ANALYTICS
+       *************************************************************/
+      const quizAnalytics = {
+        // Alguns campos comentados porque não são necessários no momento
+        // quizId: ANALYTICS_CONFIG.quizId,
+        quizName: ANALYTICS_CONFIG.quizName,
+        // quizCategory: ANALYTICS_CONFIG.quizCategory,
+        // userId: "user_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9),
+        // sessionId: "session_" + Date.now(),
+        startTime: Date.now(), // Tempo de início do quiz
+        endTime: null, // Tempo de término do quiz
+        furthestSection: "section-0", // Seção mais avançada atingida
+        responses: {}, // Respostas do usuário
+         city: "", // Cidade do usuário
+        state: "", // Estado do usuário
+        postalCode: "", // Código postal do usuário
+        device: "", // Tipo de dispositivo do usuário
+        // Campos opcionais para inputs (nome, email, whatsapp)
+        nome: "",
+        email: "",
+        whatsapp: "",
+      };
+
+      /*************************************************************
+       * 3) FUNÇÃO PARA ENVIAR OS DADOS PARA O WEBHOOK
+       *************************************************************/
+      async function sendAnalytics() {
+        try {
+          // Sincronizar userVariables com quizAnalytics
+          quizAnalytics.nome = userVariables.nome || "";
+          quizAnalytics.email = userVariables.email || "";
+          quizAnalytics.whatsapp = userVariables.whatsapp || "";
+          quizAnalytics.city = quizAnalytics.city || "Desconhecida"; // Garantir que a cidade esteja definida
+
+          const dataToSend = [quizAnalytics];
+
+          await fetch(ANALYTICS_CONFIG.webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              data: JSON.stringify(dataToSend),
+            }),
+          });
+          console.log("Analytics enviado com sucesso.");
+        } catch (error) {
+          console.error("Erro ao enviar analytics:", error);
+        }
+      }
+
+
+         /*************************************************************
+     FUNÇÃO PARA DETECTAR O TIPO DE DISPOSITIVO
+     *************************************************************/
+    function detectDeviceType() {
+      const ua = navigator.userAgent;
+      if (/android/i.test(ua)) {
+        return "Android";
+      }
+      if (/iPhone|iPad|iPod/i.test(ua)) {
+        return "iOS";
+      }
+      if (/Windows Phone/i.test(ua)) {
+        return "Windows Phone";
+      }
+      if (/Macintosh/i.test(ua)) {
+        return "Mac";
+      }
+      if (/Windows/i.test(ua)) {
+        return "Windows";
+      }
+      if (/Linux/i.test(ua)) {
+        return "Linux";
+      }
+      return "Other";
+    }
+
+    // Definir o tipo de dispositivo no início
+    quizAnalytics.device = detectDeviceType();
+
+        /*************************************************************
+        * 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
+        *************************************************************/
+        let dataSent = false; // Flag para evitar envios duplicados
+
+        function handlePageHide() {
+          if (dataSent) return; // Se os dados já foram enviados, não faz nada
+          dataSent = true; // Define a flag como true para prevenir futuros envios
+
+          quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+
+          // Sincronizar userVariables com quizAnalytics
+          quizAnalytics.nome = userVariables.nome || "";
+          quizAnalytics.email = userVariables.email || "";
+          quizAnalytics.whatsapp = userVariables.whatsapp || "";
+
+          const dataToSend = [quizAnalytics];
+          const blob = new Blob(
+            [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+            { type: "application/x-www-form-urlencoded" }
+          );
+          navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
+        }
+
+        function handleVisibilityChange() {
+          if (document.visibilityState === 'hidden') {
+            handlePageHide();
+          }
+        }
+
+        // Adicionar listeners para pagehide, beforeunload e visibilitychange
+        window.addEventListener("pagehide", handlePageHide);
+        window.addEventListener("beforeunload", handlePageHide);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+          /*************************************************************
+         * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
+         *************************************************************/
+document.addEventListener("click", function (e) {
+  const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
+  if (button) {
+    // Verificar se o botão está desabilitado
+    if (button.disabled || button.style.pointerEvents === "none") {
+      return; // Ignorar cliques em botões desabilitados ou não interativos
+    }
+
+    const link = button.getAttribute("data-link");
+    if (link) {
+      // Enviar analytics antes de redirecionar
+      quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+      sendAnalyticsAndRedirect(link);
+      return; // Evitar chamar showSection
+    }
+
+    const buttonId = button.id;
+    const connection = connectionsData.find(
+      (conn) => conn.elementId === buttonId
+    );
+    if (connection) {
+      // Registrar a resposta correspondente à seção
+      const sectionId = connection.startIndex;
+      const resposta = button.querySelector(".text").textContent;
+      quizAnalytics.responses["section_" + sectionId] = resposta;
+
+      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+    }
+  }
+});
+
+/*************************************************************
+ *  função que envia os dados de analytics antes de redirecionar
+ *************************************************************/
+function sendAnalyticsAndRedirect(url) {
+  if (dataSent) return; // Evita envios duplicados
+  dataSent = true; // Marca que os dados estão sendo enviados
+
+  // Sincronizar userVariables com quizAnalytics
+  quizAnalytics.nome = userVariables.nome || "";
+  quizAnalytics.email = userVariables.email || "";
+  quizAnalytics.whatsapp = userVariables.whatsapp || "";
+  quizAnalytics.city = quizAnalytics.city || "Desconhecida"; // Garantir que a cidade esteja definida
+
+  const dataToSend = [quizAnalytics];
+  const blob = new Blob(
+    [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+    { type: "application/x-www-form-urlencoded" }
+  );
+
+  // Enviar dados usando sendBeacon
+  const beaconSent = navigator.sendBeacon(
+    ANALYTICS_CONFIG.webhookUrl,
+    blob
+  );
+
+  if (beaconSent) {
+    // Se sendBeacon retornou true, podemos redirecionar imediatamente
+    window.location.href = url;
+  } else {
+    // Se sendBeacon falhou, enviar via fetch com atraso
+    fetch(ANALYTICS_CONFIG.webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        data: JSON.stringify(dataToSend),
+      }),
+    })
+      .then(() => {
+        window.location.href = url;
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar analytics:", error);
+        // Mesmo em caso de erro, redirecionar
+        window.location.href = url;
+      });
+  }
+
+  // Opcional: Alternativamente, adicionar um atraso para garantir o envio
+  /*
+  sendAnalytics().then(() => {
+    window.location.href = url;
+  }).catch((error) => {
+    console.error("Erro ao enviar analytics:", error);
+    window.location.href = url;
+  });
+  */
+}
+
+
+
+
+     /*************************************************************
+     * 6) FUNÇÃO PARA BUSCAR A CIDADE, ESTADO E CÓDIGO POSTAL DO USUÁRIO COM IPAPI.CO
+     *************************************************************/
+    let locationFetched = false; // Flag para evitar múltiplas chamadas
+
+    async function fetchUserLocation() {
+      if (locationFetched) return; // Evita múltiplas chamadas
+      locationFetched = true; // Marca que a localização já foi buscada
+
+      console.log("Iniciando fetchUserLocation...");
+
+      try {
+        const response = await fetch("https://ipapi.co/json/");
+        if (!response.ok) throw new Error("ipapi.co falhou");
+        const data = await response.json();
+        if (!data) throw new Error("Nenhum dado recebido da ipapi.co");
+
+        // Atualizar cidade
+        quizAnalytics.city = data.city || "Desconhecida";
+
+        // Atualizar estado (abreviação)
+        quizAnalytics.state = data.region || "Desconhecido";
+
+        // Atualizar código postal
+        quizAnalytics.postalCode = data.postal || "Desconhecido";
+
+        console.log("Localização do usuário:", quizAnalytics.city, quizAnalytics.state, quizAnalytics.postalCode);
+      } catch (error) {
+        console.error("Erro ao buscar a localização via ipapi.co:", error);
+        // Caso a ipapi.co falhe, defina os campos como "Desconhecido"
+        quizAnalytics.city = "Desconhecida";
+        quizAnalytics.state = "Desconhecido";
+        quizAnalytics.postalCode = "Desconhecido";
+      }
+    }
+
+       /*************************************************************
+       * 7) FUNÇÃO PARA CONFIGURAR BOTÕES COM DELAY
+       *************************************************************/
+function setupDelayedButtons(section) {
+  const buttons = section.querySelectorAll(".mobile-button[data-delay]");
+  buttons.forEach((button) => {
+    // Inicialmente, esconder o botão e desabilitar interações
+    button.style.opacity = "0";
+    button.style.pointerEvents = "none"; // Desabilitar cliques e interações
+
+    const delayAttr = button.getAttribute("data-delay");
+    const delaySeconds = parseFloat(delayAttr);
+    const delay = isNaN(delaySeconds) ? 0 : delaySeconds * 1000; // Converter para milissegundos
+
+    setTimeout(() => {
+      // Tornar o botão visível
+      button.style.opacity = "1";
+
+      // Habilitar interações imediatamente após definir a opacidade
+      button.style.pointerEvents = "auto";
+    }, delay);
+  });
+}
+
+/*************************************************************
+ * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
+ *************************************************************/
+function showSection(sectionId) {
+   pauseAllVideos(); 
+
+  console.log("Showing section:", sectionId);
+
+  // Remover 'active' de todas as seções e parar autoplay de galerias
+  const sections = document.querySelectorAll(".quiz-section");
+  sections.forEach((section) => {
+    section.classList.remove("active");
+    section.querySelectorAll(".mobile-gallery").forEach((gallery) => {
+      if (gallery.galleryInstance) {
+        gallery.galleryInstance.stopAutoplay();
+      }
+    });
+    // Ocultar botões e buscar cidade
+    const buttons = section.querySelectorAll(".mobile-button");
+    buttons.forEach((button) => {
+      button.style.opacity = "0";
+      button.style.transition = "none";
+      button.style.pointerEvents = "none"; // Garantir que estejam desabilitados
+    });
+  });
+
+  // Encontrar e ativar a seção alvo
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.add("active"); // Tornar a seção ativa
+
+    // Forçar a rolagem para o topo
+    window.scrollTo({ top: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Exibir botões com delay
+    setupDelayedButtons(targetSection);
+
+    // Exibir botões sem delay imediatamente
+    const regularButtons = targetSection.querySelectorAll(".mobile-button:not([data-delay])");
+    regularButtons.forEach((button) => {
+      button.style.opacity = "1";
+      button.style.transition = "opacity 0.3s ease";
+      button.style.pointerEvents = "auto"; // Habilitar cliques e interações
+    });
+
+    // Chamadas extras: barras de progresso, inputs, etc.
+    animateProgressBars(targetSection);
+    animateScores(targetSection); // <-- insira aqui
+    interpolateVariables(targetSection);
+    setupInputWidget(targetSection.querySelector(".input-widget"));
+    initializeGalleries(targetSection); // Inicializar galerias na seção
+    // Buscar a cidade do usuário
+    fetchUserLocation();
+
+    // Atualizar furthestSection se necessário
+    const indexNow = parseInt(sectionId.split("-")[1]) || 0;
+    const indexFurthest = parseInt(quizAnalytics.furthestSection.split("-")[1]) || 0;
+    if (indexNow > indexFurthest) {
+      quizAnalytics.furthestSection = sectionId;
+    }
+  }
+}
+
+
+    /*************************************************************
+ * 9) FUNÇÃO PARA TRATAR CONCLUSÃO DE PROGRESSO
+ *************************************************************/
+function handleProgressCompletion(progressElement) {
+  const enableRedirect =
+    progressElement.getAttribute("data-enable-redirect") === "true";
+  if (enableRedirect) {
+    setTimeout(function () {
+      const redirectLink =
+        progressElement.getAttribute("data-redirect-link");
+      if (redirectLink) {
+        // Verifica se os dados já foram enviados
+        if (!dataSent) {
+          quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+          sendAnalyticsAndRedirect(redirectLink);
+        } else {
+          // Se os dados já foram enviados, apenas redireciona
+          window.location.href = redirectLink;
+        }
+      } else {
+        const connection = connectionsData.find(function (conn) {
+          return conn.elementId === progressElement.id;
+        });
+        if (connection) {
+          showSection("section-" + connection.endIndex);
+        }
+      }
+    }, 1000);
+  }
+}
+
+
+/*************************************************************
+ * 10) FUNÇÃO PARA ANIMAR BARRAS DE PROGRESSO
+ *************************************************************/
+function animateProgressBars(section) {
+  const progressBars = section.querySelectorAll(".mobile-progress");
+  progressBars.forEach(function (progress) {
+    const progressBar = progress.querySelector(".progress-fill");
+    const progressValue = progress.querySelector(".progress-value");
+    const start = parseInt(progress.getAttribute("data-start")) || 0;
+    const end = parseInt(progress.getAttribute("data-end")) || 100;
+    const enableRedirect =
+      progress.getAttribute("data-enable-redirect") === "true";
+    const duration =
+      parseInt(progress.getAttribute("data-duration")) || 1;
+    console.log(
+      "Animating progress bar:",
+      progress.id,
+      "from",
+      start,
+      "to",
+      end,
+      "duration:",
+      duration
+    );
+    progressBar.style.width = start + "%";
+    progressValue.textContent = start + "%";
+    let current = start;
+    const increment = (end - start) / (duration * 50); // 50 fps
+    const interval = setInterval(function () {
+      current += increment;
+      if (current >= end) {
+        current = end;
+        clearInterval(interval);
+        console.log("Progress bar reached 100%");
+        if (enableRedirect) {
+          handleProgressCompletion(progress);
+        }
+      }
+      progressBar.style.width = current + "%";
+      progressValue.textContent = Math.round(current) + "%";
+    }, 20);
+  });
+}
+
+
+            
+/*************************************************************
+ * 11) EVENTO DOMContentLoaded PARA INICIALIZAR PRIMEIRA SEÇÃO
+ *************************************************************/
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM fully loaded");
+  const firstSection = document.querySelector(".quiz-section");
+  if (firstSection && firstSection.id) {
+    console.log("Activating first section using showSection");
+    showSection(firstSection.id); // Chama a função showSection para configurar a seção corretamente
+    dataSent = false; // Resetar a flag para permitir novos envios
+  } else {
+    console.error("Primeira seção não encontrada ou não possui um ID.");
+  }
+});
+
+
+      /*************************************************************
+       * 14) CONFIGURAÇÃO DE CORES DE HOVER PARA BOTÕES MOBILE
+       *************************************************************/
+      document.querySelectorAll(".mobile-button").forEach(function (button) {
+        const hoverColor = button.getAttribute("data-hover-color");
+        if (hoverColor) {
+          button.style.setProperty("--hover-color", hoverColor); // Definir cor de hover via CSS variável
+        }
+      });
+
+
+      /*************************************************************
+       * 16) EVENTO DOMContentLoaded PARA CONFIGURAR MULTIPLE CHOICE E OBSERVER
+       *************************************************************/
+      document.addEventListener("DOMContentLoaded", function () {
+        /**
+         * Reseta múltiplas escolhas clonando botões para remover event listeners anteriores
+         * @param {HTMLElement} widget - O widget de múltipla escolha
+         * @returns {Object} - Contém opções clonadas, botão de continuar e cores
+         */
+        function resetMultipleChoice(widget) {
+          const options = widget.querySelectorAll(".option-button");
+          const continueButton = widget.querySelector(".continue-button");
+          const continueColor = continueButton.style.backgroundColor;
+          const checkboxColor =
+            options[0]?.querySelector(".checkbox")?.style.borderColor ||
+            "#d6d6d6";
+
+          // Clonar opções para remover event listeners
+          options.forEach((option) => {
+            const clone = option.cloneNode(true);
+            option.parentNode.replaceChild(clone, option);
+          });
+
+          // Clonar botão de continuar
+          const clonedButton = continueButton.cloneNode(true);
+          continueButton.parentNode.replaceChild(clonedButton, continueButton);
+
+          // Resetar estilos das opções
+          widget.querySelectorAll(".option-button").forEach((option) => {
+            option.classList.remove("active");
+            const checkbox = option.querySelector(".checkbox");
+            if (checkbox) {
+              checkbox.style.backgroundColor = "";
+              checkbox.style.borderColor = checkboxColor;
+            }
+          });
+
+          // Resetar estilo do botão de continuar
+          clonedButton.classList.remove("active");
+          clonedButton.style.opacity = "0.5";
+          clonedButton.style.cursor = "not-allowed";
+
+          return {
+            options: widget.querySelectorAll(".option-button"),
+            continueButton: clonedButton,
+            continueColor,
+            checkboxColor,
+          };
+        }
+
+        /**
+         * Configura múltiplas escolhas adicionando event listeners
+         */
+        const setupMultipleChoice = () => {
+          document
+            .querySelectorAll(".mobile-multiple-choice")
+            .forEach((widget) => {
+              const { options, continueButton, continueColor, checkboxColor } =
+                resetMultipleChoice(widget);
+
+              /**
+               * Atualiza o botão de continuar com base na seleção
+               * @param {HTMLElement} widget - O widget de múltipla escolha
+               * @param {HTMLElement} continueButton - O botão de continuar
+               * @returns {number} - Número de opções selecionadas
+               */
+              function updateContinueButton(widget, continueButton) {
+                const selectedCount = widget.querySelectorAll(
+                  ".option-button.active"
+                ).length;
+                const isActive = selectedCount > 0;
+
+                continueButton.classList.toggle("active", isActive);
+                continueButton.style.opacity = isActive ? "1" : "0.5";
+                continueButton.style.cursor = isActive
+                  ? "pointer"
+                  : "not-allowed";
+                return selectedCount;
+              }
+
+              /**
+               * Manipulador de clique nas opções
+               * @param {Event} e - Evento de clique
+               */
+              function handleOptionClick(e) {
+                e.preventDefault();
+                this.classList.toggle("active"); // Toggle active class
+                const checkbox = this.querySelector(".checkbox");
+
+                if (this.classList.contains("active")) {
+                  checkbox.style.backgroundColor = checkboxColor;
+                  checkbox.style.borderColor = checkboxColor;
+                } else {
+                  checkbox.style.backgroundColor = "";
+                  checkbox.style.borderColor = checkboxColor;
+                }
+
+                updateContinueButton(widget, continueButton); // Atualizar botão de continuar
+              }
+
+              // Adicionar event listeners às opções
+              options.forEach((option) => {
+                option.addEventListener("click", handleOptionClick);
+              });
+
+              // Adicionar event listener ao botão de continuar
+              continueButton.addEventListener("click", () => {
+                const selectedCount = widget.querySelectorAll(
+                  ".option-button.active"
+                ).length;
+                if (selectedCount > 0) {
+                  const connection = connectionsData.find(
+                    (conn) => conn.elementId === widget.id
+                  );
+                  if (connection) {
+                    showSection("section-" + connection.endIndex); // Navegar para a próxima seção
+                  }
+                }
+              });
+            });
+        };
+
+        setupMultipleChoice(); // Inicializar múltiplas escolhas
+
+        /**
+         * Observador de mutações para detectar mudanças de seção
+         */
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.target.classList.contains("active")) {
+              setupMultipleChoice(); // Reconfigurar múltiplas escolhas na nova seção
+              setupInputWidget(mutation.target.querySelector(".input-widget")); // Configurar widgets de input
+            }
+          });
+        });
+
+        // Observar todas as seções do quiz
+        document.querySelectorAll(".quiz-section").forEach((section) => {
+          observer.observe(section, {
+            attributes: true,
+            attributeFilter: ["class"],
+          });
+        });
+      });
+
+      /*************************************************************
+       * 17) SISTEMA DE VARIÁVEIS USUÁRIO
+       *************************************************************/
+      let userVariables = JSON.parse(
+        sessionStorage.getItem("userVariables") || "{}"
+      ); // Recuperar variáveis do usuário
+
+      /**
+       * Configura um widget de input para armazenar variáveis do usuário
+       * @param {HTMLElement} widget - O widget de input
+       */
+      function setupInputWidget(widget) {
+        if (!widget) return;
+
+        const input = widget.querySelector(".input-field");
+        const button = widget.querySelector(".continue-button");
+        const variable = input.getAttribute("data-variable");
+
+        button.disabled = true;
+        button.style.opacity = "0.5";
+        button.style.cursor = "not-allowed";
+
+        // Preencher input se já existir valor
+        if (userVariables[variable]) {
+          input.value = userVariables[variable];
+          button.disabled = false;
+          button.style.opacity = "1";
+          button.style.cursor = "pointer";
+        }
+
+        // Evento de input para atualizar variáveis e estado do botão
+        input.addEventListener("input", function () {
+          const hasValue = this.value.trim().length > 0;
+          button.disabled = !hasValue;
+          button.style.opacity = hasValue ? "1" : "0.5";
+          button.style.cursor = hasValue ? "pointer" : "not-allowed";
+
+          userVariables[variable] = this.value;
+          sessionStorage.setItem(
+            "userVariables",
+            JSON.stringify(userVariables)
+          ); // Salvar no sessionStorage
+        });
+
+        // Evento de clique no botão de continuar
+        button.addEventListener("click", function () {
+          if (input.value.trim().length > 0) {
+            const connection = connectionsData.find(
+              (conn) => conn.elementId === widget.id
+            );
+            if (connection) {
+              showSection("section-" + connection.endIndex); // Navegar para a próxima seção
+            }
+          }
+        });
+      }
+
+      /**
+       * Interpola variáveis nos textos das seções
+       * @param {HTMLElement} section - A seção onde interpolar
+       */
+      function interpolateVariables(section) {
+        const textNodes = Array.from(section.getElementsByTagName("*"))
+          .filter((el) => !el.children.length && el.textContent.includes("{{"))
+          .map((el) => ({ element: el, original: el.textContent }));
+
+        textNodes.forEach(({ element, original }) => {
+          let text = original;
+          const matches = text.match(/{{([^}]+)}}/g) || [];
+
+          matches.forEach((match) => {
+            const variable = match.slice(2, -2).trim();
+            const value =
+              userVariables[variable] || quizAnalytics[variable] || "";
+            text = text.replace(match, value);
+          });
+
+          element.textContent = text; // Atualizar o texto com as variáveis interpoladas
+        });
+      }
+
+      /*************************************************************
+       * 18) FUNÇÃO PARA INICIALIZAR TODAS AS GALERIAS
+       *************************************************************/
+      function initializeGalleries(container = document) {
+        container.querySelectorAll(".mobile-gallery").forEach((gallery) => {
+          const existingGallery = gallery.galleryInstance;
+          if (existingGallery) {
+            existingGallery.stopAutoplay(); // Parar autoplay se já existir
+          }
+          gallery.galleryInstance = new Gallery(gallery); // Inicializar nova galeria
+        });
+      }
+
+      /*************************************************************
+       * 19) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
+       *************************************************************/
+      class Gallery {
+        constructor(element) {
+          this.gallery = element;
+          this.track = element.querySelector(".gallery-track");
+          this.slides = [...element.querySelectorAll(".gallery-slide")];
+          this.dots = [...element.querySelectorAll(".gallery-dot")];
+          this.currentSlide = 0;
+          this.autoplayInterval = null;
+
+          // Obter cores definidas nos dots ou usar padrão
+          const dots = element.querySelectorAll(".gallery-dot");
+          const firstDot = dots[0];
+          const secondDot = dots[1];
+
+          this.dotActiveColor = firstDot?.style.backgroundColor || "#9333ea";
+          this.dotColor = secondDot?.style.backgroundColor || "#ccc";
+
+          // Configurar estilos dos dots
+          this.dots.forEach((dot, index) => {
+            dot.style.transition = "all 0.3s ease";
+            this.updateDotStyle(dot, index === 0);
+          });
+
+          // Adicionar event listeners aos dots
+          this.dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => this.goToSlide(index));
+          });
+
+          // Eventos de toque para dispositivos móveis
+          this.touchStartX = 0;
+          this.touchEndX = 0;
+
+          this.track.addEventListener("touchstart", (e) => this.touchStart(e));
+          this.track.addEventListener("touchmove", (e) => this.touchMove(e));
+          this.track.addEventListener("touchend", (e) => this.touchEnd(e));
+
+          // Eventos para pausar e retomar autoplay
+          this.track.addEventListener("mouseenter", () => this.stopAutoplay());
+          this.track.addEventListener("mouseleave", () => this.startAutoplay());
+
+          // Atualizar cores dos dots e iniciar autoplay
+          this.updateDotColors();
+          this.startAutoplay();
+        }
+
+        /**
+         * Atualiza o estilo de um dot com base no estado ativo
+         * @param {HTMLElement} dot - O dot a ser atualizado
+         * @param {boolean} isActive - Se o dot está ativo
+         */
+        updateDotStyle(dot, isActive) {
+          dot.style.backgroundColor = isActive
+            ? this.dotActiveColor
+            : this.dotColor;
+          dot.style.transform = isActive ? "scale(1.2)" : "scale(1)";
+        }
+
+        /**
+         * Atualiza as cores de todos os dots com base no slide atual
+         */
+        updateDotColors() {
+          this.dots.forEach((dot, index) => {
+            this.updateDotStyle(dot, index === this.currentSlide);
+          });
+        }
+
+        /**
+         * Inicia o autoplay da galeria
+         */
+        startAutoplay() {
+          this.stopAutoplay(); // Garantir que não haja múltiplos intervalos
+          this.autoplayInterval = setInterval(() => this.next(), 3000); // Avançar a cada 3 segundos
+        }
+
+        /**
+         * Para o autoplay da galeria
+         */
+        stopAutoplay() {
+          if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+            this.autoplayInterval = null;
+          }
+        }
+
+        /**
+         * Atualiza a posição do slide atual
+         */
+        updateSlide() {
+          this.track.style.transition = "transform 0.3s ease";
+          this.track.style.transform = `translateX(-${
+            this.currentSlide * 100
+          }%)`;
+          this.updateDotColors(); // Atualizar cores dos dots
+        }
+
+        /**
+         * Avança para o próximo slide
+         */
+        next() {
+          this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+          this.updateSlide();
+        }
+
+        /**
+         * Retrocede para o slide anterior
+         */
+        prev() {
+          this.currentSlide =
+            (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+          this.updateSlide();
+        }
+
+        /**
+         * Vai para um slide específico
+         * @param {number} index - Índice do slide
+         */
+        goToSlide(index) {
+          this.currentSlide = index;
+          this.updateSlide();
+          this.stopAutoplay(); // Parar autoplay temporariamente
+          this.startAutoplay(); // Reiniciar autoplay
+        }
+
+        /**
+         * Evento de início de toque
+         * @param {Event} e - Evento de toque
+         */
+        touchStart(e) {
+          this.touchStartX = e.touches[0].clientX;
+          this.stopAutoplay(); // Parar autoplay durante o toque
+          this.track.style.transition = "none";
+        }
+
+        /**
+         * Evento de movimento de toque
+         * @param {Event} e - Evento de toque
+         */
+        touchMove(e) {
+          if (!this.touchStartX) return;
+          e.preventDefault();
+          const currentX = e.touches[0].clientX;
+          const diff = this.touchStartX - currentX;
+          const moveX = -(diff + this.currentSlide * this.gallery.offsetWidth);
+          this.track.style.transform = `translateX(${moveX}px)`;
+        }
+
+        /**
+         * Evento de fim de toque
+         * @param {Event} e - Evento de toque
+         */
+        touchEnd(e) {
+          const touchEndX = e.changedTouches[0].clientX;
+          const diff = this.touchStartX - touchEndX;
+
+          if (Math.abs(diff) > 50) {
+            // Se o swipe for significativo
+            if (diff > 0) this.next();
+            else this.prev();
+          } else {
+            this.updateSlide(); // Reposicionar se o swipe não for significativo
+          }
+
+          this.touchStartX = 0;
+          this.startAutoplay(); // Reiniciar autoplay
+        }
+      }
+
+      /*************************************************************
+       * 20) FUNÇÃO PARA INICIALIZAR VIDEOS DO YOUTUBE
+       *************************************************************/
+      // Objeto para armazenar todos os players
+      const videoPlayers = new Map();
+
+      /**
+       * Inicializa um player de vídeo do YouTube
+       * @param {HTMLElement} videoDiv - O div que contém o vídeo
+       */
+      function initializeVideo(videoDiv) {
+        const uniqueId = videoDiv.id.split("-")[1];
+        const startOverlay = videoDiv.querySelector(
+          `#start-overlay-${uniqueId}`
+        );
+        const pauseOverlay = videoDiv.querySelector(
+          `#pause-overlay-${uniqueId}`
+        );
+        const blurBg = videoDiv.querySelector(`#blur-bg-${uniqueId}`);
+        const iframe = videoDiv.querySelector(`#youtube-video-${uniqueId}`);
+
+        if (!iframe) return; // Se não houver iframe, sair
+
+        const player = new YT.Player(`youtube-video-${uniqueId}`, {
+          events: {
+            onReady: function () {
+              startOverlay.style.display = "flex"; // Mostrar overlay de início
+              blurBg.style.display = "block"; // Mostrar fundo borrado
+
+              // Definir a qualidade do vídeo para HD (1080p)
+              player.setPlaybackQuality("hd1080");
+
+              // Evento de clique no overlay de início para reproduzir vídeo
+              startOverlay.onclick = () => {
+                player.playVideo();
+                startOverlay.style.display = "none";
+                blurBg.style.display = "none";
+              };
+
+              // Evento de clique no overlay de pausa para retomar vídeo
+              pauseOverlay.onclick = () => {
+                player.playVideo();
+                pauseOverlay.style.display = "none";
+                blurBg.style.display = "none";
+              };
+            },
+            onStateChange: function (event) {
+              if (event.data === YT.PlayerState.PAUSED) {
+                pauseOverlay.style.display = "flex"; // Mostrar overlay de pausa
+                blurBg.style.display = "block";
+              } else if (event.data === YT.PlayerState.ENDED) {
+                startOverlay.style.display = "flex"; // Mostrar overlay de fim
+                pauseOverlay.style.display = "none";
+                blurBg.style.display = "block";
+              } else if (event.data === YT.PlayerState.PLAYING) {
+                startOverlay.style.display = "none"; // Esconder overlays quando reproduzindo
+                pauseOverlay.style.display = "none";
+                blurBg.style.display = "none";
+
+                // Assegurar que a qualidade esteja em HD
+                player.setPlaybackQuality("hd1080");
+              }
+            },
+          },
+        });
+
+        // Armazena o player para uso posterior
+        videoPlayers.set(uniqueId, player);
+      }
+
+      /**
+       * Função callback chamada quando a API do YouTube está pronta
+       */
+      function onYouTubeIframeAPIReady() {
+        // Inicializa todos os vídeos presentes na página
+        document.querySelectorAll(".mobile-video").forEach((videoDiv) => {
+          initializeVideo(videoDiv);
+        });
+      }
+
+      /**
+       * Observador de mutações para detectar quando uma seção se torna ativa e inicializar vídeos
+       */
+      const videoObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.target.classList.contains("active")) {
+            mutation.target
+              .querySelectorAll(".mobile-video")
+              .forEach((videoDiv) => {
+                if (!videoPlayers.has(videoDiv.id.split("-")[1])) {
+                  initializeVideo(videoDiv); // Inicializar vídeo se ainda não estiver inicializado
+                }
+              });
+          }
+        });
+      });
+
+      // Observar todas as seções do quiz para inicializar vídeos quando se tornam ativas
+      document.querySelectorAll(".quiz-section").forEach((section) => {
+        videoObserver.observe(section, {
+          attributes: true,
+          attributeFilter: ["class"],
+          subtree: true,
+        });
+      });
+
+      /*************************************************************
+       * 21) FUNÇÃO PARA pausar video quando troca de cessao
+       *************************************************************/
+      function pauseAllVideos() {
+        videoPlayers.forEach(player => {
+          player.pauseVideo();
+        });
+      }
+
+      /*************************************************************
+       * 22) // Inicializa os FAQs
+       *************************************************************/
+     
+    document.querySelectorAll(".faq-header").forEach((header) => {
+      header.addEventListener("click", () => {
+        // Toggle active class no header
+        header.classList.toggle("active");
+        
+        // Toggle o content
+        const content = header.nextElementSibling;
+        content.classList.toggle("active");
+        
+        // Ajusta altura do conteúdo
+        if (content.classList.contains("active")) {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } else {
+          content.style.maxHeight = "0";
+        }
+      });
+    });
+  
+
+      /*************************************************************
+       * 23) anima score
+       *************************************************************/
+      /**
+   * Função para animar cada Score de uma Seção
+   * @param {HTMLElement} section - Seção do quiz que está sendo exibida
+   */
+  function animateScores(section) {
+    const scoreElements = section.querySelectorAll('.mobile-score');
+    scoreElements.forEach((scoreEl) => {
+      const circleWrap = scoreEl.querySelector('.circle-wrap');
+      const percentEl = scoreEl.querySelector('.percent');
+      const targetValue = parseInt(percentEl.textContent, 10) || 0;
+      const primaryColor = scoreEl.getAttribute('data-primary-color') || "#a31b1b";
+      const secondaryColor = scoreEl.getAttribute('data-secondary-color') || "#dc2626";
+      const bgColor = scoreEl.getAttribute('data-bg-color') || "#f8f9fe";
+      animateScore(circleWrap, percentEl, targetValue, primaryColor, secondaryColor, bgColor);
+    });
+  }
+ /**
+   * Função genérica de animação do Score
+   * @param {HTMLElement} circleWrap - Div que recebe o 'background' com conic-gradient
+   * @param {HTMLElement} percentEl - Elemento que mostra o valor atual (em %)
+   * @param {number} targetValue - Valor final da pontuação (ex: 85)
+   * @param {string} primaryColor - Cor inicial do gradiente
+   * @param {string} secondaryColor - Cor final do gradiente
+   * @param {string} bgColor - Cor de fundo do centro (onde fica o número)
+   */
+  function animateScore(circleWrap, percentEl, targetValue, primaryColor, secondaryColor, bgColor) {
+    let currentValue = 0;
+    // Intervalo ~50 FPS
+    const stepTimeMs = 20;
+
+    // Inicia em 0%
+    percentEl.textContent = "0%";
+    // Reseta o conic-gradient, começando tudo em 0%
+    circleWrap.style.background = `conic-gradient(${primaryColor} 0%, ${secondaryColor} 0%, rgb(229, 231, 235) 0%)`;
+
+    const intervalId = setInterval(() => {
+      if (currentValue >= targetValue) {
+        clearInterval(intervalId);
+        return;
+      }
+      currentValue++;
+
+      // Atualiza o conic-gradient
+      circleWrap.style.background = `
+        conic-gradient(
+          ${primaryColor} 0%,
+          ${secondaryColor} ${currentValue}%,
+          rgb(229, 231, 235) ${currentValue}%
+        )
+      `;
+      // Atualiza texto
+      percentEl.textContent = currentValue + "%";
+      // Mantém a cor do círculo central
+      percentEl.style.backgroundColor = bgColor;
+    }, stepTimeMs);
+  }
+      /*************************************************************
+       * 24) FINALIZAÇÃO DA INICIALIZAÇÃO DE GALERIAS E EVENTOS DOMContentLoaded
+       *************************************************************/
+      // Já tratado anteriormente no evento DOMContentLoaded
+
+      /*************************************************************
+       * 25) INICIALIZAÇÃO DE TODOS OS WIDGETS DE INPUT
+       *************************************************************/
+      document.querySelectorAll(".input-widget").forEach(setupInputWidget);
+    </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      /*************************************************************
+       * 26) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
+       *************************************************************/
+      // Já definida anteriormente como Gallery
+
+      /*************************************************************
+       * 27) FUNÇÃO PARA INICIALIZAR GALERIAS EM UM CONTÊINER ESPECÍFICO
+       *************************************************************/
+      // Já definida anteriormente como initializeGalleries
+
+      /*************************************************************
+       * 28) FUNÇÃO PARA ATUALIZAR A FUNÇÃO showSection COM INICIALIZAÇÃO DE GALERIAS
+       *************************************************************/
+      // Já definida anteriormente, não é necessário duplicar
+
+      /*************************************************************
+       * 29) FINALIZAÇÃO DA INICIALIZAÇÃO DE GALERIAS E EVENTOS DOMContentLoaded
+       *************************************************************/
+      // Já tratado anteriormente no evento DOMContentLoaded
+      
+    </script>
+  </body>
+</html>
