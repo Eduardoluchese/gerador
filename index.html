@@ -1305,6 +1305,7 @@ esses poderão ser seus resultados...</h2></div><div id="score-1739707787652" cl
           /*************************************************************
          * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
          *************************************************************/
+
 document.addEventListener("click", function (e) {
   const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
   if (button) {
@@ -1336,6 +1337,20 @@ document.addEventListener("click", function (e) {
         sendAnalyticsAndRedirect(link);
       }
       return; // Evitar chamar showSection
+    }
+
+    // Se não tiver link, processa a navegação entre nós
+    const buttonId = button.id;
+    const connection = connectionsData.find(
+      (conn) => conn.elementId === buttonId
+    );
+    if (connection) {
+      // Registrar a resposta correspondente à seção
+      const sectionId = connection.startIndex;
+      const resposta = button.querySelector(".text").textContent;
+      quizAnalytics.responses["section_" + sectionId] = resposta;
+
+      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
     }
   }
 });
