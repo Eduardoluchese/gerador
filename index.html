@@ -1315,23 +1315,27 @@ document.addEventListener("click", function (e) {
 
     const link = button.getAttribute("data-link");
     if (link) {
+      e.preventDefault(); // Previne comportamento padrão
+      
+      // Armazena o estado no sessionStorage
+      if (!sessionStorage.getItem('quizState')) {
+        sessionStorage.setItem('quizState', 'active');
+      }
+
       // Enviar analytics antes de redirecionar
       quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
-      sendAnalyticsAndRedirect(link);
+      
+      // Usa window.location.href para garantir navegação consistente
+      const handleRedirect = () => {
+        window.location.href = link;
+      };
+
+      if (dataSent) {
+        handleRedirect();
+      } else {
+        sendAnalyticsAndRedirect(link);
+      }
       return; // Evitar chamar showSection
-    }
-
-    const buttonId = button.id;
-    const connection = connectionsData.find(
-      (conn) => conn.elementId === buttonId
-    );
-    if (connection) {
-      // Registrar a resposta correspondente à seção
-      const sectionId = connection.startIndex;
-      const resposta = button.querySelector(".text").textContent;
-      quizAnalytics.responses["section_" + sectionId] = resposta;
-
-      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
     }
   }
 });
